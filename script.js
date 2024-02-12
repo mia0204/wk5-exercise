@@ -34,7 +34,7 @@ map.on('load', () => {
         }
     });
 
-    //draw layers on the map
+    //draw layer on the map
     map.addLayer({
         'id': 'uoft-pnt', //unique layer name
         'type': 'circle',
@@ -44,5 +44,42 @@ map.on('load', () => {
             'circle-color': '#B42222'
         }
     });
+
+    //add a data source from a GeoJSON file
+    map.addSource('buildings-data', {
+        type: 'geojson',
+        //raw link in github to the geojson file
+        data: 'https://raw.githubusercontent.com/mia0204/wk5-exercise/main/buildings.geojson'
+    });
+
+    map.addLayer({
+        'id': 'buidlings-point',
+        'type': 'circle',
+        'source': 'buildings-data',
+        'paint': {
+            'circle-radius': 5,
+            'circle-color': '#007cbf'
+        }
+    });
+
+    //add a data source from a Mapbox tileset
+    map.addSource('toronto-ct', {
+        'type': 'vector',
+        'url': 'mapbox://wxyue0204.ciowcz6b' //mapbox tileset ID
+    });
+
+    map.addLayer({
+        'id': 'toronto-census-tract',
+        'type': 'fill',
+        'source': 'toronto-ct',
+        'paint': {
+            'fill-color': '#888888',
+            'fill-opacity': 0.4,
+            'fill-outline-color': 'purple'
+        },
+        'source-layer': 'torontoct-9a1gfe' //Mapbox tileset name
+    },
+        //'uoft-buildings' //drawing order
+    );
 
 });
